@@ -2,7 +2,8 @@
 terraform {
   required_providers {
     dcnm = {
-      source = "CiscoDevNet/dcnm"
+      source  = "CiscoDevNet/dcnm"
+      version = "1.2.0"
     }
   }
 }
