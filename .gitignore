@@ -9,6 +9,7 @@
 *.lock.hcl
 # pem files
 *.pem
+*.env
 
 # exclude non aws folders
 *.DS_Store
