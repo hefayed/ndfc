@@ -27,7 +27,7 @@ module "fabric_switches" {
 }
 
 
-/* resource "dcnm_interface" "vpc" {
+resource "dcnm_interface" "vpc" {
   for_each               = var.vpc
   policy                 = "int_vpc_access_host"
   type                   = "vpc"
@@ -57,7 +57,7 @@ data "dcnm_interface" "vpc" {
 
 output "vpc" {
   value = [for key in data.dcnm_interface.vpc : key.id]
-} */
+} 
 
 
 
@@ -82,5 +82,4 @@ output "vpc" {
 
 output "MyNetwork_30000" {
   value = data.dcnm_network.check
-} */
-
+}
