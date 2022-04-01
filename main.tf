@@ -48,17 +48,17 @@ module "vpc" {
 }
 
 
-# data "dcnm_interface" "vpc" {
-#   for_each      = var.vpc
-#   serial_number = dcnm_interface.vpc[each.key].serial_number
-#   name          = each.value.name
-#   type          = "vpc"
-#   fabric_name   = "fabric-1"
-# }
+data "dcnm_interface" "vpc" {
+  for_each      = var.vpc
+  serial_number = dcnm_interface.vpc[each.key].serial_number
+  name          = each.value.name
+  type          = "vpc"
+  fabric_name   = "fabric-1"
+}
 
-# output "vpc" {
-#   value = [for key in data.dcnm_interface.vpc : key.id]
-# } 
+output "vpc" {
+  value = [for key in data.dcnm_interface.vpc : key.id]
+}
 
 # resource "dcnm_network" "MyNetwork_30003" {
 #   deploy         = false
