@@ -38,6 +38,11 @@ variable "vpc_peer2_interface" {
 
 variable "vpc" {
   type = map(object({
+    policy                 = string
+    type                   = string
+    mode                   = string
+    bpdu_guard_flag        = string
+    mtu                    = string
     name                   = string
     switch_name_1          = string
     switch_name_2          = string

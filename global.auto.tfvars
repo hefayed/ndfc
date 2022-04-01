@@ -16,8 +16,14 @@ inventory = {
   }
 }
 
+
 vpc = {
   vpc110 = {
+    policy : "int_vpc_access_host"
+    type : "vpc"
+    mode : "active"
+    bpdu_guard_flag : "true"
+    mtu : "jumbo"
     fabric_name : "fabric-1"
     switch_name_1 : "Leaf-111"
     switch_name_2 : "Leaf-112"
@@ -30,6 +36,11 @@ vpc = {
     vpc_peer2_interface : ["e1/10"]
   }
   vpc111 = {
+    policy : "int_vpc_access_host"
+    type : "vpc"
+    mode : "active"
+    bpdu_guard_flag : "true"
+    mtu : "jumbo"
     fabric_name : "fabric-1"
     switch_name_1 : "Leaf-111"
     switch_name_2 : "Leaf-112"
@@ -43,6 +54,11 @@ vpc = {
   }
 
   vpc112 = {
+    policy : "int_vpc_access_host"
+    type : "vpc"
+    mode : "active"
+    bpdu_guard_flag : "true"
+    mtu : "jumbo"
     fabric_name : "fabric-1"
     switch_name_1 : "Leaf-111"
     switch_name_2 : "Leaf-112"
