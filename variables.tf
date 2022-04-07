@@ -53,6 +53,9 @@ variable "vpc" {
     vpc_peer2_access_vlans = string
     vpc_peer1_interface    = list(string)
     vpc_peer2_interface    = list(string)
+    switch_list            = list(string)
+    interface_list         = list(string)
+    vlan_id                = number
   }))
 }
 

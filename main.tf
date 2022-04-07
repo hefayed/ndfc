@@ -19,16 +19,20 @@ provider "dcnm" {
   platform = "nd"
 }
 
-module "fabric_switches" {
-  source          = "./modules/ndfc_inventory"
+module "inventory" {
+  source          = "./modules/inventory"
   for_each        = var.inventory
   fabric_name     = each.value.fabric_name
   fabric_switches = each.value.switch_name
 }
 
 
-module "vpc" {
-  source                 = "./modules/vpc"
+# output "fabric-1-switches_serial_number" {
+#   value = lookup({ for key, value in module.inventory["fabric-1"].msd : key => value }, "Leaf-112")
+# }
+
+module "vpc_interface" {
+  source                 = "./modules/vpc_interface"
   for_each               = var.vpc
   policy                 = each.value.policy
   type                   = each.value.type
@@ -47,37 +51,58 @@ module "vpc" {
   vpc_peer2_interface    = each.value.vpc_peer2_interface
 }
 
-
-data "dcnm_interface" "vpc" {
-  for_each      = var.vpc
-  serial_number = dcnm_interface.vpc[each.key].serial_number
-  name          = each.value.name
-  type          = "vpc"
-  fabric_name   = "fabric-1"
-}
-
-output "vpc" {
-  value = [for key in data.dcnm_interface.vpc : key.id]
-}
-
-# resource "dcnm_network" "MyNetwork_30003" {
-#   deploy         = false
-#   description    = "Created by terraform"
-#   fabric_name    = "Multi-Site"
-#   ipv4_gateway   = "192.168.103.254/24"
-#   name           = "MyNetwork_30003"
-#   ir_enable_flag = true
-#   network_id     = "30003"
-#   tag            = "12345"
-#   vlan_id        = 2303
-#   vrf_name       = "MyVRF_50000"
+# data "dcnm_interface" "vpc_interface" {
+#   for_each      = var.vpc
+#   serial_number = module.vpc_interface[each.key].serial_number
+#   name          = each.value.name
+#   type          = "vpc"
+#   fabric_name   = "fabric-1"
 # }
 
-# data "dcnm_network" "check" {
+# output "vpc" {
+#   value = { for key, value in data.dcnm_interface.vpc_interface : key => value }
+# }
+
+module "MyNetwork_30000" {
+  for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2300 }
+  source         = "./modules/MyNetwork_30000"
+  deploy         = true
+  description    = "Created by terraform"
+  fabric_name    = "Multi-Site"
+  ipv4_gateway   = "192.168.101.254/24"
+  name           = "MyNetwork_30000"
+  ir_enable_flag = true
+  network_id     = "30000"
+  tag            = "12345"
+  vlan_id        = 2300
+  vrf_name       = "MyVRF_50000"
+  switch_list    = each.value.switch_list
+  switch_ports   = each.value.interface_list
+}
+
+
+module "MyNetwork_30001" {
+  for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2301 }
+  source         = "./modules/MyNetwork_30001"
+  deploy         = true
+  description    = "Created by terraform"
+  fabric_name    = "Multi-Site"
+  ipv4_gateway   = "192.168.102.254/24"
+  name           = "MyNetwork_30001"
+  ir_enable_flag = true
+  network_id     = "30001"
+  tag            = "12345"
+  vlan_id        = 2301
+  vrf_name       = "MyVRF_50000"
+  switch_list    = each.value.switch_list
+  switch_ports   = each.value.interface_list
+}
+
+# data "dcnm_network" "MyNetwork_30003" {
 #   fabric_name = "Multi-Site"
-#   name        = "MyNetwork_30000"
+#   name        = "MyNetwork_30003"
 # }
 
-# output "MyNetwork_30000" {
-#   value = data.dcnm_network.check
+# output "MyNetwork_30003" {
+#   value = data.dcnm_network.MyNetwork_30003
 # }
