@@ -70,6 +70,9 @@ resource "dcnm_network" "MyNetwork_30000" {
       switch_ports  = attachments.value.switch_ports
     }
   }
+  lifecycle {
+    preprevent_destroy = true
+  }
 }
 
 
@@ -91,5 +94,8 @@ resource "dcnm_network" "MyNetwork_30001" {
       attach        = true
       switch_ports  = attachments.value.switch_ports
     }
+  }
+  lifecycle {
+    preprevent_destroy = true
   }
 }
