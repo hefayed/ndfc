@@ -63,9 +63,9 @@ module "vpc_interface" {
 #   value = { for key, value in data.dcnm_interface.vpc_interface : key => value }
 # }
 
-module "MyNetwork_30000" {
-  for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2300 }
-  source         = "./modules/MyNetwork_30000"
+resource "dcnm_network" "MyNetwork_30000" {
+  # for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2300 }
+  # source         = "./modules/MyNetwork_30000"
   deploy         = true
   description    = "Created by terraform"
   fabric_name    = "Multi-Site"
@@ -76,14 +76,20 @@ module "MyNetwork_30000" {
   tag            = "12345"
   vlan_id        = 2300
   vrf_name       = "MyVRF_50000"
-  switch_list    = each.value.switch_list
-  switch_ports   = each.value.interface_list
+  dynamic "attachments" {
+    for_each = [for index, value in var.MyNetwok_30000 : value]
+    content {
+      serial_number = attachments.value.serial_number
+      attach        = true
+      switch_ports  = attachments.value.switch_ports
+    }
+  }
 }
 
 
-module "MyNetwork_30001" {
-  for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2301 }
-  source         = "./modules/MyNetwork_30001"
+resource "dcnm_network" "MyNetwork_30001" {
+  # for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2301 }
+  # source         = "./modules/MyNetwork_30001"
   deploy         = true
   description    = "Created by terraform"
   fabric_name    = "Multi-Site"
@@ -94,8 +100,14 @@ module "MyNetwork_30001" {
   tag            = "12345"
   vlan_id        = 2301
   vrf_name       = "MyVRF_50000"
-  switch_list    = each.value.switch_list
-  switch_ports   = each.value.interface_list
+  dynamic "attachments" {
+    for_each = [for index, value in var.MyNetwok_30001 : value]
+    content {
+      serial_number = attachments.value.serial_number
+      attach        = true
+      switch_ports  = attachments.value.switch_ports
+    }
+  }
 }
 
 # data "dcnm_network" "MyNetwork_30003" {
