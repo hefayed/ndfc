@@ -72,6 +72,34 @@ vpc = {
   }
 }
 
+network_30000 = {
+  deploy : true
+  description : "Created by terraform"
+  fabric_name : "Multi-Site"
+  ipv4_gateway : "192.168.101.254/24"
+  name : "MyNetwork_30000"
+  ir_enable_flag : true
+  network_id : "30000"
+  tag : "12345"
+  vlan_id : 2300
+  vrf_name : "MyVRF_50000"
+}
+
+network_30001 = {
+  deploy : true
+  description : "Created by terraform"
+  fabric_name : "Multi-Site"
+  ipv4_gateway : "192.168.102.254/24"
+  name : "MyNetwork_30001"
+  ir_enable_flag : true
+  network_id : "30001"
+  tag : "12345"
+  vlan_id : 2301
+  vrf_name : "MyVRF_50000"
+}
+
+
+
 MyNetwok_30000 = {
   Leaf-111 : {
     serial_number : "9RM8HCE9ZNM"

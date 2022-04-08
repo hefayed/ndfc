@@ -52,16 +52,16 @@ module "vpc_interface" {
 }
 
 resource "dcnm_network" "MyNetwork_30000" {
-  deploy         = true
-  description    = "Created by terraform"
-  fabric_name    = "Multi-Site"
-  ipv4_gateway   = "192.168.101.254/24"
-  name           = "MyNetwork_30000"
-  ir_enable_flag = true
-  network_id     = "30000"
-  tag            = "12345"
-  vlan_id        = 2300
-  vrf_name       = "MyVRF_50000"
+  deploy         = var.network_30000.deploy
+  description    = var.network_30000.description
+  fabric_name    = var.network_30000.fabric_name
+  ipv4_gateway   = var.network_30000.ipv4_gateway
+  name           = var.network_30000.name
+  ir_enable_flag = var.network_30000.ir_enable_flag
+  network_id     = var.network_30000.network_id
+  tag            = var.network_30000.tag
+  vlan_id        = var.network_30000.vlan_id
+  vrf_name       = var.network_30000.vrf_name
   dynamic "attachments" {
     for_each = [for index, value in var.MyNetwok_30000 : value]
     content {
@@ -71,22 +71,22 @@ resource "dcnm_network" "MyNetwork_30000" {
     }
   }
   lifecycle {
-    preprevent_destroy = true
+    prevent_destroy = true
   }
 }
 
 
 resource "dcnm_network" "MyNetwork_30001" {
-  deploy         = true
-  description    = "Created by terraform"
-  fabric_name    = "Multi-Site"
-  ipv4_gateway   = "192.168.102.254/24"
-  name           = "MyNetwork_30001"
-  ir_enable_flag = true
-  network_id     = "30001"
-  tag            = "12345"
-  vlan_id        = 2301
-  vrf_name       = "MyVRF_50000"
+  deploy         = var.network_30001.deploy
+  description    = var.network_30001.description
+  fabric_name    = var.network_30001.fabric_name
+  ipv4_gateway   = var.network_30001.ipv4_gateway
+  name           = var.network_30001.name
+  ir_enable_flag = var.network_30001.ir_enable_flag
+  network_id     = var.network_30001.network_id
+  tag            = var.network_30001.tag
+  vlan_id        = var.network_30001.vlan_id
+  vrf_name       = var.network_30001.vrf_name
   dynamic "attachments" {
     for_each = [for index, value in var.MyNetwok_30001 : value]
     content {
@@ -96,6 +96,6 @@ resource "dcnm_network" "MyNetwork_30001" {
     }
   }
   lifecycle {
-    preprevent_destroy = true
+    prevent_destroy = true
   }
 }

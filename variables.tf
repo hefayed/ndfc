@@ -19,23 +19,6 @@ variable "password" {
 variable "url" {
   type = string
 }
-
-/* variable "vpc_peer1_id" {
-  type = list(string)
-} */
-
-/* variable "vpc_peer2_id" {
-  type = list(string)
-}
-
-variable "vpc_peer1_interface" {
-  type = list(string)
-}
-
-variable "vpc_peer2_interface" {
-  type = list(string)
-} */
-
 variable "vpc" {
   type = map(object({
     policy                 = string
@@ -68,6 +51,14 @@ variable "MyNetwok_30001" {
     serial_number = string
     switch_ports : list(string)
   }))
+}
+
+variable "network_30000" {
+  type = map(any)
+}
+
+variable "network_30001" {
+  type = map(any)
 }
 
 
