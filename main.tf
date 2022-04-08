@@ -51,21 +51,7 @@ module "vpc_interface" {
   vpc_peer2_interface    = each.value.vpc_peer2_interface
 }
 
-# data "dcnm_interface" "vpc_interface" {
-#   for_each      = var.vpc
-#   serial_number = module.vpc_interface[each.key].serial_number
-#   name          = each.value.name
-#   type          = "vpc"
-#   fabric_name   = "fabric-1"
-# }
-
-# output "vpc" {
-#   value = { for key, value in data.dcnm_interface.vpc_interface : key => value }
-# }
-
 resource "dcnm_network" "MyNetwork_30000" {
-  # for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2300 }
-  # source         = "./modules/MyNetwork_30000"
   deploy         = true
   description    = "Created by terraform"
   fabric_name    = "Multi-Site"
@@ -88,8 +74,6 @@ resource "dcnm_network" "MyNetwork_30000" {
 
 
 resource "dcnm_network" "MyNetwork_30001" {
-  # for_each       = { for key, value in var.vpc : key => value if value.vlan_id == 2301 }
-  # source         = "./modules/MyNetwork_30001"
   deploy         = true
   description    = "Created by terraform"
   fabric_name    = "Multi-Site"
@@ -109,12 +93,3 @@ resource "dcnm_network" "MyNetwork_30001" {
     }
   }
 }
-
-# data "dcnm_network" "MyNetwork_30003" {
-#   fabric_name = "Multi-Site"
-#   name        = "MyNetwork_30003"
-# }
-
-# output "MyNetwork_30003" {
-#   value = data.dcnm_network.MyNetwork_30003
-# }
